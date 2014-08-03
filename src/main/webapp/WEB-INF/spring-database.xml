@@ -1,0 +1,63 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/assignment_db" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.company.product.domain.User</value>
+				<value>com.company.product.domain.Department</value>
+				<value>com.company.product.domain.Rating</value>
+				<value>com.company.product.domain.SkillFactor</value>
+				<value>com.company.product.domain.Technology</value>
+				<value>com.company.product.domain.UserRating</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect"> org.hibernate.dialect.HSQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="userDAO" class="com.company.product.dao.impl.UserDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="departmentDAO" class="com.company.product.dao.impl.DepartmentDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="ratingDAO" class="com.company.product.dao.impl.RatingDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="skillFactorDAO" class="com.company.product.dao.impl.SkillFactorDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="technologyDAO" class="com.company.product.dao.impl.TechnologyDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="userRatingDAO" class="com.company.product.dao.impl.UserRatingDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+
+
+
+
+
+
+
+
+</beans>

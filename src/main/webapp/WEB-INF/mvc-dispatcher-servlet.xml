@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<bean id="userService" class="com.company.product.service.impl.UserServiceImpl" />
+	<bean id="departmentService" class="com.company.product.service.impl.DepartmentServiceImpl" />
+	<bean id="ratingService" class="com.company.product.service.impl.RatingServiceImpl" />
+	<bean id="skillFactorService" class="com.company.product.service.impl.SkillFactorServiceImpl" />
+	<bean id="technologyService" class="com.company.product.service.impl.TechnologyServiceImpl" />
+	<bean id="userRatingService" class="com.company.product.service.impl.UserRatingServiceImpl" />
+
+	<bean id="accessDeniedHandler" class="com.company.product.common.UserAccessDeniedHandler">
+		<property name="accessDeniedUrl" value="/SimplWebApp/error" />
+	</bean>
+
+	<!-- <resources mapping="/resources/**" location="/resources/" /> -->
+	<context:component-scan base-package="com.company.product.controller" />
+
+	<mvc:annotation-driven />
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+
+	<mvc:resources mapping="/resources/css/**" location="/resources/css/" />
+	<mvc:resources mapping="/resources/js/**" location="/resources/js/**" />
+	<mvc:resources mapping="/resources/img/**" location="/resources/img/" />
+	<mvc:resources mapping="/resources/fonts/**" location="/resources/fonts/" />
+
+	<!-- Bean for validation purpose -->
+	<bean id="technologyValidator" class="com.company.product.validation.TechnologyValidator" />
+	<bean id="registrationValidator" class="com.company.product.validation.RegisrationValidator" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="messages" />
+	</bean>
+
+</beans>
