@@ -18,8 +18,8 @@ public interface DepartmentDAO {
 
 	List<Department> findAll();
 	
+	Department findByName(String name);
 	
-	
-	
+	boolean checkExists(String name);
 }
 

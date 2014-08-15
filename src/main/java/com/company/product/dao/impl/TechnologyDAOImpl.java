@@ -11,6 +11,10 @@ import com.company.product.domain.Department;
 import com.company.product.domain.SkillFactor;
 import com.company.product.domain.Technology;
 
+
+
+
+
 class TechnologyDAOImpl implements TechnologyDAO {
 
 	private HibernateTemplate hibernateTemplate;
@@ -31,6 +35,7 @@ class TechnologyDAOImpl implements TechnologyDAO {
 
 	}
 
+	
 	public void delete(int id) {
 		Technology technology = findById(id);
 		if (technology != null) {
@@ -51,7 +56,7 @@ class TechnologyDAOImpl implements TechnologyDAO {
 
 	@Override
 	public Technology findByName(String name) {
-		// TODO Auto-generated method stub
+		
 		return (Technology) hibernateTemplate.getSessionFactory().openSession()
 				.createCriteria(Technology.class)
 				.add(Restrictions.eq("name", name)).uniqueResult();
@@ -62,6 +67,14 @@ class TechnologyDAOImpl implements TechnologyDAO {
 		String query = "from Technology where DEPARTMENT_ID=" + id;
 		return (List<Technology>) hibernateTemplate.getSessionFactory()
 				.openSession().createQuery(query).list();
+	}
+
+	@Override
+	public boolean checkExists(String name) {
+		boolean result = hibernateTemplate.getSessionFactory().openSession()
+				.createQuery("from Technology where name=:name")
+				.setParameter("name", name).uniqueResult() != null;
+		return result;
 	}
 
 

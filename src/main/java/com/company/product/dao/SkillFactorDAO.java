@@ -2,9 +2,7 @@ package com.company.product.dao;
 
 import java.util.List;
 
-
 import com.company.product.domain.SkillFactor;
-
 
 public interface SkillFactorDAO {
 	void add(SkillFactor skillFactor);
@@ -16,8 +14,8 @@ public interface SkillFactorDAO {
 	SkillFactor findById(int id);
 
 	List<SkillFactor> findAll();
+
 	SkillFactor findByName(String name);
+	
+	boolean checkExists(String name);
 }
-
-
-

@@ -52,11 +52,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public boolean checkUserNameAvailbility(String name) {
-		/*
-		 * return sessionFactory.getCurrentSession()
-		 * .createQuery("from Place where place_Name=:place")
-		 * .setParameter("place", place) .uniqueResult() != null;
-		 */
+	
 		boolean result = hibernateTemplate.getSessionFactory().openSession()
 				.createQuery("from User where name=:name")
 				.setParameter("name", name).uniqueResult() != null;

@@ -45,4 +45,12 @@ class RatingDAOImpl implements RatingDAO {
 		
 	}
 
+	@Override
+	public boolean checkExists(String name) {
+		boolean result = hibernateTemplate.getSessionFactory().openSession()
+				.createQuery("from Rating where name=:name")
+				.setParameter("name", name).uniqueResult() != null;
+		return result;
+	}
+
 }

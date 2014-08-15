@@ -8,7 +8,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.company.product.dao.DepartmentDAO;
 import com.company.product.domain.Department;
-import com.company.product.domain.User;
+
 
 class DepartmentDAOImpl implements DepartmentDAO {
 
@@ -47,7 +47,20 @@ class DepartmentDAOImpl implements DepartmentDAO {
 
 	}
 
-	
-	
-	
+	@Override
+	public Department findByName(String name) {
+
+		return (Department) hibernateTemplate.getSessionFactory().openSession()
+				.createCriteria(Department.class)
+				.add(Restrictions.eq("name", name)).uniqueResult();
+	}
+
+	@Override
+	public boolean checkExists(String name) {
+		boolean result = hibernateTemplate.getSessionFactory().openSession()
+				.createQuery("from Department where name=:name")
+				.setParameter("name", name).uniqueResult() != null;
+		return result;
+	}
+
 }

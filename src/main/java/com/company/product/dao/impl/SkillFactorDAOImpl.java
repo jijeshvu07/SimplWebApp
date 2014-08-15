@@ -59,4 +59,12 @@ class SkillFactorDAOImpl implements SkillFactorDAO {
 				.add(Restrictions.eq("factorName", name)).uniqueResult();
 	}
 
+	@Override
+	public boolean checkExists(String name) {
+		boolean result = hibernateTemplate.getSessionFactory().openSession()
+				.createQuery("from SkillFactor where factorName=:factorName")
+				.setParameter("factorName", name).uniqueResult() != null;
+		return result;
+	}
+
 }

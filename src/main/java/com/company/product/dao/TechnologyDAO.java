@@ -19,4 +19,6 @@ public interface TechnologyDAO {
 	Technology findByName(String name);
 
 	List<Technology> findByTechnologyId(int id);
+	
+	boolean checkExists(String name);
 }

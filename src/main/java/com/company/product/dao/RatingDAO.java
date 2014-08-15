@@ -17,6 +17,8 @@ public interface RatingDAO {
 	Rating findById(int id);
 
 	List<Rating> findAll();
+	
+	boolean checkExists(String name);
 }
 
 
