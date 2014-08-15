@@ -45,4 +45,10 @@ public class RatingServiceImpl implements RatingService {
 
 	}
 
+	@Override
+	public boolean checkExists(String name) {
+		
+		return ratingDAO.checkExists(name);
+	}
+
 }

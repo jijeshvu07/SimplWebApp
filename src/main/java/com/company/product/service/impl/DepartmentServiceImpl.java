@@ -43,6 +43,18 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return departmentDAO.findAll();
 	}
 
+	@Override
+	public Department findDepartmentByName(String name) {
+		
+		return departmentDAO.findByName(name);
+	}
+
+	@Override
+	public boolean checkExists(String name) {
+		
+		return departmentDAO.checkExists(name);
+	}
+
 	
 
 	

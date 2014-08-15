@@ -12,38 +12,29 @@ import org.w3c.dom.ls.LSResourceResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
-import com.company.product.domain.Department;
-import com.company.product.domain.Technology;
-import com.company.product.service.TechnologyService;
 
-public class TechnologyValidator extends Validator {
+
+import com.company.product.domain.SkillFactor;
+import com.company.product.service.SkillFactorService;
+
+public class SkillFactorValidator extends Validator {
 
 	@Autowired
-	TechnologyService technologyService;
+	private SkillFactorService skillFactorService;
 	
-    public boolean supports(Class<?> cls) {
-        return Technology .class.equals(cls);
-    }
-
-    public void validate(Object target, Errors errors) {
-      //  super.validate(target, errors);
-        Technology tecObj= (Technology ) target;
-        //here i am assuming Technology name is REQUIRED and   
-        //NotEmpty.technology.name is in message.properties
-     
-        Department dept = tecObj.getDepartment();
-        //as from from your are binding department ID
-        if (dept==null || dept.getId() == 0  ) {
-        	
-           errors.rejectValue("department.id", "NotEmpty.technology.department");
-        }
-        if (technologyService.checkExists(tecObj.getName())) {
-
-			errors.rejectValue("name", "technology.name.exists");
+	public boolean supports(Class<?> cls) {
+		return SkillFactor.class.equals(cls);
+	}
+	public void validate(Object target, Errors errors) {
+	SkillFactor skillFactor= (SkillFactor) target;
+		if (skillFactorService.checkExists(skillFactor.getFactorName())) {
+			
+			errors.rejectValue("factorName", "skillFactor.factorName.exists");
 
 		}
-  }
 
+	}
+	
 	@Override
 	public ErrorHandler getErrorHandler() {
 		// TODO Auto-generated method stub
@@ -80,4 +71,5 @@ public class TechnologyValidator extends Validator {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

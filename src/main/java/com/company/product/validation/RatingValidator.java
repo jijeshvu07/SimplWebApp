@@ -12,37 +12,29 @@ import org.w3c.dom.ls.LSResourceResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
-import com.company.product.domain.Department;
-import com.company.product.domain.Technology;
-import com.company.product.service.TechnologyService;
 
-public class TechnologyValidator extends Validator {
+
+import com.company.product.domain.Rating;
+import com.company.product.service.RatingService;
+
+public class RatingValidator extends Validator {
 
 	@Autowired
-	TechnologyService technologyService;
-	
-    public boolean supports(Class<?> cls) {
-        return Technology .class.equals(cls);
-    }
+	private RatingService ratingService;
 
-    public void validate(Object target, Errors errors) {
-      //  super.validate(target, errors);
-        Technology tecObj= (Technology ) target;
-        //here i am assuming Technology name is REQUIRED and   
-        //NotEmpty.technology.name is in message.properties
-     
-        Department dept = tecObj.getDepartment();
-        //as from from your are binding department ID
-        if (dept==null || dept.getId() == 0  ) {
-        	
-           errors.rejectValue("department.id", "NotEmpty.technology.department");
-        }
-        if (technologyService.checkExists(tecObj.getName())) {
+	public boolean supports(Class<?> cls) {
+		return Rating.class.equals(cls);
+	}
 
-			errors.rejectValue("name", "technology.name.exists");
+	public void validate(Object target, Errors errors) {
+		Rating rating= (Rating) target;
+		if (ratingService.checkExists(rating.getName())) {
+
+			errors.rejectValue("name", "rating.name.exists");
 
 		}
-  }
+
+	}
 
 	@Override
 	public ErrorHandler getErrorHandler() {
@@ -59,25 +51,26 @@ public class TechnologyValidator extends Validator {
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setErrorHandler(ErrorHandler errorHandler) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setResourceResolver(LSResourceResolver resourceResolver) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void validate(Source source, Result result) throws SAXException,
 			IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 }

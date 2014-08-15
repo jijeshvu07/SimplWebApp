@@ -54,4 +54,10 @@ public class TechnologyServiceImpl implements TechnologyService {
 		return technologyDAO.findByTechnologyId(id);
 	}
 
+	@Override
+	public boolean checkExists(String name) {
+		
+		return technologyDAO.checkExists(name);
+	}
+
 }

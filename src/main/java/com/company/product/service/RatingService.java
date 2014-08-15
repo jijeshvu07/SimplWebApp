@@ -14,4 +14,6 @@ public interface RatingService {
 	Rating findRatingById(int id);
 
 	void deleteRating(int id);
+	
+	boolean checkExists(String name);
 }

@@ -42,6 +42,36 @@
 
 		});
 	});
+	
+	
+	/* 
+	jQuery(document).ready(function(){
+		jQuery("#userform").submit(function(e){
+			jQuery(".formFieldError").remove();
+			jQuery.ajax({
+					url: jQuery(this).attr("action"),
+					context: document.body,
+					type: 'post',
+					data:jQuery(this).serialize()
+				}).done(function(res) {
+					if(res.status==="ERROR"){
+						for(var key in res.errorsMap){
+							var err="<span class=\"formFieldError\" id=\""+key+"Id\">"+res.errorsMap[key]+"</span>";
+							jQuery("[name^='"+key+"']").after(err);
+						}
+					}else{						
+						jQuery("#msg").html("Form submitted");
+					}
+				}).fail(function(data){
+					jQuery("#msg").html("<span class=\"formFieldError\">Server failed to process request</span>");
+				});
+			return false;
+		});
+	});
+	
+	 */
+	
+	
 </script>
 </head>
 <body>
@@ -82,17 +112,14 @@
 	<h1>Departments</h1>
 	<fieldset>
 		<h4>Add New Department</h4>
-		<form:form method="post" action="add-department"
-			commandName="department">
+		<form:form method="post" action="/SimplWebApp/add-department" commandName="department" >
 
-			<label>Department Name</label>
-			<form:input path="name" />
-			<form:errors path="name" class="error"></form:errors>
-			<br />
-
-			<input type="submit" class="btn btn-primary" />
+			<label>Department Name</label> <form:input path="name" />
+				<form:errors path="name" class="error"></form:errors>
+			<br /> <input type="submit" class="btn btn-primary" />
 
 		</form:form>
+		<div id="msg"></div>
 	</fieldset>
 	<table id="listTable" class="table table-striped">
 		<thead>
@@ -110,7 +137,7 @@
 					<td nowrap="nowrap">${dept.id}&nbsp;</td>
 					<td nowrap="nowrap">${dept.name}&nbsp;</td>
 					<td nowrap="nowrap">${dept.createdDate}&nbsp;</td>
-				<%-- 	<td nowrap="nowrap"><a title="Edit" href="#" class="edit"
+					<%-- 	<td nowrap="nowrap"><a title="Edit" href="#" class="edit"
 						id="edit">Edit</a><input id="hiddenid" class="hiddenid"
 						type="hidden" value="${dept.id}" /></td> --%>
 					<td nowrap="nowrap"><a title="Delete"
@@ -120,5 +147,13 @@
 			</c:forEach>
 		</tbody>
 	</table>
+
+	<a href="${pageContext.request.contextPath}/export.xls">Export</a><br/><br/>
+	
+	
+	
+	<form method="post" action="upload" enctype="multipart/form-data">
+		<input type="file" name="file" /> <input type="submit" />
+	</form>
 </body>
 </html>

@@ -18,4 +18,6 @@ public interface TechnologyService {
 	Technology findTechnologyByName(String name);
 
 	List<Technology> findTechnologyByDepartmentId(int id);
+	
+	boolean checkExists(String name);
 }

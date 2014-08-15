@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -16,6 +17,7 @@ public class User {
 
 	private int id;
 	@NotEmpty
+	
 	private String name;
 	@NotEmpty
 	private String password;

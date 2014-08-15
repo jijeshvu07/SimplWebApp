@@ -15,48 +15,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Register New-User</title>
-<script type="text/javascript">
-		
-	$(document)	.ready(	function(){
-	$("#username").change(function() {	
-		$.ajax({
-		type : 'POST',
-		dataType : 'json',
-		url : '/SimplWebApp/checkusername',
-		data : ({
-			name : $("#username").val()
-			
-			
-		}),
-		success : function(response) {
-			
-			
 
-						if (response == '0')//if ajax_check_username.php return value "0"
-						{
-							
-							$("#availability_status").html('<font color="Green"> Available </font>');
-							
-							//add this image to the span with id "availability_status"
-						} else if (response == '1')//if it returns "1"
-						{
-							
-							$("#availability_status").html('<font color="Red">Not Available </font>');
-							
-						}
-
-					
-
-		},
-		error : function() {
-			alert('Error while request..');
-		}
-
-});
-		
-	});
-	});
-</script>
 
 <style>
 .error {
@@ -101,8 +60,7 @@
 						<tbody>
 							<tr>
 								<td>Name:</td>
-								<td><form:input path="name" 
-										id="username" /><span id="availability_status"></span></td>
+								<td><form:input path="name" id="username" /></td>
 								<td><form:errors path="name" class="error" /></td>
 								
 							</tr>

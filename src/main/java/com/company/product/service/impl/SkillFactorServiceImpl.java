@@ -50,4 +50,10 @@ public class SkillFactorServiceImpl implements SkillFactorService {
 		return skillFactorDAO.findByName(name);
 	}
 
+	@Override
+	public boolean checkExists(String name) {
+		
+		return skillFactorDAO.checkExists(name);
+	}
+
 }

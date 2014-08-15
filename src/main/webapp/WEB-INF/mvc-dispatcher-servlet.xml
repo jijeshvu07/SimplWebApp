@@ -35,6 +35,16 @@
 	<!-- Bean for validation purpose -->
 	<bean id="technologyValidator" class="com.company.product.validation.TechnologyValidator" />
 	<bean id="registrationValidator" class="com.company.product.validation.RegisrationValidator" />
+	<bean id="departmentValidator" class="com.company.product.validation.DepartmentValidator" />
+	<bean id="ratingValidator" class="com.company.product.validation.RatingValidator" />
+	<bean id="skillFactorValidator" class="com.company.product.validation.SkillFactorValidator" />
+
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location">
+			<value>/WEB-INF/spring-excel-views.xml</value>
+		</property>
+		<property name="order" value="0" />
+	</bean>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -48,6 +58,12 @@
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames" value="messages" />
+	</bean>
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1000000" />
 	</bean>
 
 </beans>

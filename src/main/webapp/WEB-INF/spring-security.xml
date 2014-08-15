@@ -12,8 +12,11 @@
 		<form-login login-page="/login" default-target-url="/home"
 			authentication-failure-url="/loginfailed" />
 		<logout logout-success-url="/logout" />
+	
+
 	</http>
 
+	
 	<authentication-manager>
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"

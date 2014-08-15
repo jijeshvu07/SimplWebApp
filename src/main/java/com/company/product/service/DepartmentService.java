@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.company.product.domain.Department;
 
-
-
 public interface DepartmentService {
 
 	void saveDept(Department department);
@@ -18,7 +16,7 @@ public interface DepartmentService {
 
 	List<Department> findAllDept();
 
-	
-	
-	
+	Department findDepartmentByName(String name);
+
+	boolean checkExists(String name);
 }
