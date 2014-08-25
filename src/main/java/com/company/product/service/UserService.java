@@ -14,4 +14,5 @@ public interface UserService {
 	public boolean userAlreadyTakenValidation(String userName);
 	public String getLoggedUserName();
 	User getLoggedUserAccount();
+	User userByUserName(String name);
 }

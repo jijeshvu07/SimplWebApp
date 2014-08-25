@@ -10,21 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "technology")
 public class Technology {
-private	int id;
-@NotEmpty
-private	String name;
+	private int id;
+	@NotEmpty
+	private String name;
 
-private	Department department;
-private	Date createdDate;
-private	boolean isDelete;
+	private Department department;
+	private Date createdDate;
+	private boolean isDelete;
 
 	public Technology() {
 		super();

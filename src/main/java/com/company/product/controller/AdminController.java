@@ -7,14 +7,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,13 +62,13 @@ public class AdminController {
 
 	@Autowired
 	private TechnologyValidator techValid;
-	
+
 	@Autowired
 	private DepartmentValidator departmentValidator;
-	
+
 	@Autowired
 	private SkillFactorValidator skillFactorValidator;
-	
+
 	@Autowired
 	private RatingValidator ratingValidator;
 
@@ -172,7 +168,8 @@ public class AdminController {
 	 */
 
 	@RequestMapping(value = "/add-department")
-	public String addDepartment(@ModelAttribute(value = "department") @Valid Department department,
+	public String addDepartment(
+			@ModelAttribute(value = "department") @Valid Department department,
 			BindingResult result) {
 		// call validator
 		departmentValidator.validate(department, result);
@@ -268,48 +265,68 @@ public class AdminController {
 
 	@RequestMapping(value = "/uploadtechnology")
 	public @ResponseBody String uploadTechnology(
-			@RequestParam("datafile") MultipartFile file) throws IOException {
+			@RequestParam("myfile") MultipartFile file) throws IOException {
 		Gson gson = new Gson();
 		String data = null;
-
+	
 		List<Department> departments = departmentList();
 
 		InputStream input = file.getInputStream();
 		POIFSFileSystem fs = new POIFSFileSystem(input);
 		HSSFWorkbook wb = new HSSFWorkbook(fs);
 		HSSFSheet sheet = wb.getSheetAt(0);
-		HSSFRow row;
-		int errorLineNumber = 0;
-		try {
+		HSSFRow row = null;
+      int result=validateExcel(departments, sheet, row);
+		System.out.println("******"+result);
+		if (result==0) {
 			for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-
 				row = sheet.getRow(i);
-				errorLineNumber = i;
-				String dept = (String.valueOf(row.getCell(2)
+				Technology technology = new Technology();
+				technology.setDepartment(departmentService
+						.findDepartmentByName(String.valueOf(row.getCell(2)
+								.getRichStringCellValue())));
+				technology.setName(String.valueOf(row.getCell(1)
 						.getRichStringCellValue()));
-				for (Department department : departments) {
-					if (department.getName().equalsIgnoreCase(dept)) {
 
-						Technology technology = new Technology();
-						technology.setDepartment(departmentService
-								.findDepartmentByName(String.valueOf(row
-										.getCell(2).getRichStringCellValue())));
-						technology.setName(String.valueOf(row.getCell(1)
-								.getRichStringCellValue()));
-						data = gson.toJson("Success");
-						System.out.println("****" + technology);
-						technologyService.saveTechnology(technology);
-					}
-				}
+				System.out.println("****" + technology);
+
+				technologyService.saveTechnology(technology);
+
+				data = gson.toJson("Success!");
 
 			}
-		} catch (Exception e) {
-			data = gson.toJson("Data Rejection on Line: " + errorLineNumber);
+
+		}else if(result==1){
+			data = gson.toJson("Error!");
 		}
 
 		return data;
 	}
+public int  validateExcel(List<Department>departments,HSSFSheet sheet,HSSFRow row){
+	
+	
+	for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
+		row = sheet.getRow(i);
+
+		String dept = (String.valueOf(row.getCell(2)
+				.getRichStringCellValue()));
+		
+		
+		for (Department department : departments) {
+			if (!department.getName().equalsIgnoreCase(dept)) {
+				System.out.println("******"+department);
+				return 1;
+			}
+		}
+
+	}
+
+	
+	
+	return 0;
+	
+}
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String handleFormUpload(@RequestParam("file") MultipartFile file)
 			throws IOException {

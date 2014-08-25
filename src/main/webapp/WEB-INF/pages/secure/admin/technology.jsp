@@ -7,20 +7,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Technology</title>
 
-<link rel="stylesheet" href="http://jqueryvalidation.org/files/demo/site-demos.css">
+<link rel="stylesheet"
+	href="http://jqueryvalidation.org/files/demo/site-demos.css">
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css" />" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap-theme.min.css" />" />
 <script src="<c:url value="/resources/js/jquery.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.form.js" />"></script>
 <style>
 .error {
 	color: #ff0000;
 }
 </style>
 <script language="Javascript">
-function fileUpload(form, action_url, div_id) {
+/* function fileUpload(form, action_url, div_id) {
     // Create the iframe...
     var iframe = document.createElement("iframe");
     iframe.setAttribute("id", "upload_iframe");
@@ -72,53 +74,79 @@ function fileUpload(form, action_url, div_id) {
     form.submit();
  
     document.getElementById(div_id).innerHTML = "checking data...";
-    location.refesh();
+   
 }
+
+ */
+
+$(document).ready(function()
+		{
+		 
+		    var options = { 
+		   	
+		    complete: function(response) 
+		    {
+		    	alert(response.responseText);
+		      
+		    },
+		    error: function()
+		    {
+		    	alert("ERROR: unable to upload file"); 
+		 
+		    }
+		 
+		}; 
+		 
+		     $("#myForm").ajaxForm(options);
+		 
+		});
+
 </script>
 </head>
 <body>
-<nav role="navigation" class="navbar navbar-default navbar-fixed-top">
-				<div class="container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-						<button type="button" data-target="#navbarCollapse"
-							data-toggle="collapse" class="navbar-toggle">
-							<span class="sr-only">Toggle navigation</span> <span
-								class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-						<a href="#" class="navbar-brand">Skill Test</a>
-					</div>
-					<!-- Collection of nav links and other content for toggling -->
-					<div id="navbarCollapse" class="collapse navbar-collapse">
-						<ul class="nav navbar-nav">
-							<li ><a
-								href="${pageContext.request.contextPath}/home">Home</a></li>
-							<li><a
-								href="${pageContext.request.contextPath}/technologies">Technology</a></li>
-							<li><a href="${pageContext.request.contextPath}/departments">Department</a></li>
-							<li><a
-								href="${pageContext.request.contextPath}/skill-factors">Skill-Factor</a></li>
-							<li><a href="${pageContext.request.contextPath}/rating">Rating</a></li>
-							<li><a href="${pageContext.request.contextPath}/user-rating">Users-Rating</a></li>
-							<li><a href="${pageContext.request.contextPath}/users">Users</a></li>
-							
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="<c:url value="/j_spring_security_logout" />">
-									Logout</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-	<br/><br/><br/><h1>Technologies</h1>
+	<nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" data-target="#navbarCollapse"
+				data-toggle="collapse" class="navbar-toggle">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a href="#" class="navbar-brand">Skill Test</a>
+		</div>
+		<!-- Collection of nav links and other content for toggling -->
+		<div id="navbarCollapse" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/technologies">Technology</a></li>
+				<li><a href="${pageContext.request.contextPath}/departments">Department</a></li>
+				<li><a href="${pageContext.request.contextPath}/skill-factors">Skill-Factor</a></li>
+				<li><a href="${pageContext.request.contextPath}/rating">Rating</a></li>
+				<li><a href="${pageContext.request.contextPath}/user-rating">Users-Rating</a></li>
+				<li><a href="${pageContext.request.contextPath}/users">Users</a></li>
+
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="<c:url value="/j_spring_security_logout" />">
+						Logout</a></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+	<br />
+	<br />
+	<br />
+	<h1>Technologies</h1>
 	<fieldset>
 		<h4>Add New Technology</h4>
 		<form:form method="post" action="add-technology"
 			commandName="technology" id="technologyForm">
 
 			<label>Technology Name</label>
-			<form:input path="name" /><form:errors path="name" class="error"></form:errors>
+			<form:input path="name" />
+			<form:errors path="name" class="error"></form:errors>
 			<br />
 			<label>Department</label>
 			<form:select path="department.id">
@@ -127,9 +155,11 @@ function fileUpload(form, action_url, div_id) {
 
 				<form:options items="${departments}" itemValue="id" itemLabel="name" />
 
-			</form:select><form:errors path="department.id" class="error"></form:errors><br />
+			</form:select>
+			<form:errors path="department.id" class="error"></form:errors>
+			<br />
 			<%-- 	<form:select path="department.id" items="${departments}" /> --%>
-			<input type="submit" class="btn btn-primary"/>
+			<input type="submit" class="btn btn-primary" />
 
 		</form:form>
 	</fieldset>
@@ -164,12 +194,20 @@ function fileUpload(form, action_url, div_id) {
 	</table>
 
 
-	<form enctype="multipart/form-data">
-<input type="file" name="datafile" id="datafile"/>
-<input type="button" value="upload"
-        onClick="fileUpload(this.form,'/SimplWebApp/uploadtechnology','upload'); return false;" >
-<div id="upload"></div>
-</form>
+	<%-- <form enctype="multipart/form-data">
+		<input type="file" name="datafile" id="datafile" /> <input
+			type="button" value="upload"
+			onClick="fileUpload(this.form,'/SimplWebApp/uploadtechnology','upload'); return false;">
+		<div id="upload"></div>
+	</form> --%>
+	<form id="myForm" action="/SimplWebApp/uploadtechnology" method="post"
+		enctype="multipart/form-data">
+		<input type="file" size="60" name="myfile"> <input
+			type="submit" value="Upload">
+	</form>
+
+	
+
 	
 </body>
 </html>

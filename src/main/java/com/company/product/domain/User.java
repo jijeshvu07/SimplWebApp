@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -17,30 +16,29 @@ public class User {
 
 	private int id;
 	@NotEmpty
-	
 	private String name;
 	@NotEmpty
 	private String password;
-	
+
 	private Department department;
 	@NotEmpty
 	private String email;
-	
+
 	private String authority;
 
 	public User() {
 		super();
-		
+
 	}
 
-	public User(int id, String name, String password, String email,Department department,
-			String authority) {
+	public User(int id, String name, String password, String email,
+			Department department, String authority) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
-		this.department=department;
+		this.department = department;
 		this.authority = authority;
 	}
 
@@ -90,7 +88,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name = "department_id", nullable = false)
 	public Department getDepartment() {
@@ -107,6 +105,5 @@ public class User {
 				+ ", department=" + department + ", email=" + email
 				+ ", authority=" + authority + "]";
 	}
-
 
 }

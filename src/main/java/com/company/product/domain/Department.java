@@ -8,8 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -17,11 +16,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "department")
 public class Department {
-	int id;
+	private int id;
 	@NotEmpty
-	String name;
-	Date createdDate;
-	boolean isDelete;
+	private String name;
+	private Date createdDate;
+	private boolean isDelete;
 
 	public Department() {
 		super();

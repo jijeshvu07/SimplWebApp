@@ -1,10 +1,11 @@
 package com.company.product.controller;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.company.product.validation.*;
 import com.company.product.domain.Department;
 import com.company.product.service.DepartmentService;
@@ -35,10 +37,10 @@ public class LoginController {
 	@Autowired
 	private RegisrationValidator regisrationValidator;
 
-	private boolean isRolePresent(Collection<GrantedAuthority> authorities,
+	private boolean isRolePresent(Collection<? extends GrantedAuthority> collection,
 			String role) {
 		boolean isRolePresent = false;
-		for (GrantedAuthority grantedAuthority : authorities) {
+		for (GrantedAuthority grantedAuthority : collection) {
 			isRolePresent = grantedAuthority.getAuthority().equals(role);
 			if (isRolePresent)
 				break;
@@ -48,7 +50,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
-
+		
 		if (isRolePresent(SecurityContextHolder.getContext()
 				.getAuthentication().getAuthorities(), "ROLE_NORMAL")) {
 			model.addAttribute("isAdmin", false);
@@ -69,6 +71,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(ModelMap model) {
+		
 		model.addAttribute("isLogedIn", true);
 		return "login";
 	}
@@ -94,6 +97,7 @@ public class LoginController {
 		}
 		
 		
+		user.setPassword(DigestUtils.md5Hex(user.getPassword()));
 		user.setAuthority("ROLE_NORMAL");
 
 		userService.saveUser(user);
@@ -117,25 +121,7 @@ public class LoginController {
 
 	}
 
-	@RequestMapping(value = "/checkusername")
-	public @ResponseBody String checkUserName(@RequestParam("name") String name) {
-		boolean result = userService.userAlreadyTakenValidation(name);
-		String data = convertBooleanToString(result);
-		Gson gson = new Gson();
-		String json = gson.toJson(data);
-		return json;
-
-	}
-
-	public String convertBooleanToString(boolean b) {
-		String result = "";
-		if (b == true) {
-			result = "1";
-		} else {
-			result = "0";
-		}
-		return result;
-	}
+	
 
 	@ModelAttribute("departments")
 	public List<Department> departmentList() {

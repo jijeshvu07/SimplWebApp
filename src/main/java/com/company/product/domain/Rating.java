@@ -14,11 +14,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "rating")
 public class Rating {
-	int id;
+	private int id;
 	@NotEmpty
-	String name;
-	Date createdDate;
-	boolean isDelete;
+	private String name;
+	private Date createdDate;
+	private boolean isDelete;
 
 	public Rating() {
 		super();
@@ -32,6 +32,7 @@ public class Rating {
 		this.createdDate = createdDate;
 		this.isDelete = isDelete;
 	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false, length = 19)
@@ -42,6 +43,7 @@ public class Rating {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	@Column(name = "NAME", nullable = false, length = 50)
 	public String getName() {
 		return name;
@@ -50,6 +52,7 @@ public class Rating {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	@Column(name = "CREATED_DATE", nullable = false)
 	public Date getCreatedDate() {
 		return createdDate;

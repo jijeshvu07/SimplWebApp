@@ -134,9 +134,9 @@
 			<c:forEach items="${departments}" var="dept" varStatus="i">
 				<tr>
 
-					<td nowrap="nowrap">${dept.id}&nbsp;</td>
-					<td nowrap="nowrap">${dept.name}&nbsp;</td>
-					<td nowrap="nowrap">${dept.createdDate}&nbsp;</td>
+					<td nowrap="nowrap">${dept.id}</td>
+					<td nowrap="nowrap">${dept.name}</td>
+					<td nowrap="nowrap">${dept.createdDate}</td>
 					<%-- 	<td nowrap="nowrap"><a title="Edit" href="#" class="edit"
 						id="edit">Edit</a><input id="hiddenid" class="hiddenid"
 						type="hidden" value="${dept.id}" /></td> --%>
